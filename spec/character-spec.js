@@ -1,4 +1,6 @@
 import { CharacterClass } from './../src/character';
+import { Player } from './../src/player';
+import { Enemy } from './../src/enemy';
 
 describe('CharacterClass', function(){
   it('should check if something is truely dead', function()
@@ -19,5 +21,15 @@ describe('CharacterClass', function(){
     Grannk.getAttacked(1000000000);
     Grannk.checkAndMakeDead();
     expect(true).toEqual(Grannk.isDead);
+  });
+  it('should test if attack sequence is even real', function()
+  {
+    let babyJames = new Player(0, 0, 0, 0, 'mud', 0, 0);
+    babyJames.James();
+    let newSkelly = new Enemy('mud', 0, 0, 0);
+    newSkelly.WeakSkeleton();
+    babyJames.battleSequence(newSkelly, 2);
+    expect(50).toEqual(newSkelly.currentHP);
+    expect(150).toEqual(babyJames.currentHP);
   });
 });
