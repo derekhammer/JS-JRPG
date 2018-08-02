@@ -2,6 +2,7 @@ import { CharacterClass } from './../src/character';
 import { Player } from './../src/player';
 import { Enemy } from './../src/enemy';
 
+
 describe('CharacterClass', function(){
   it('should check if something is truely dead', function()
   {
