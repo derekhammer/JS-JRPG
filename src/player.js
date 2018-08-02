@@ -1,5 +1,6 @@
 import { CharacterClass } from './character';
-import { Equipment } from './inventory';
+import { Equipment } from './equipment';
+import { Consumabes } from './../src/consumables';
 
 export class Player extends CharacterClass
 {
@@ -22,7 +23,7 @@ export class Player extends CharacterClass
     this.intelligence = 5;
     this.strength = 10;
     this.dexterity = 20;
-    this.inventory = [];
+    this.inventory = ["empty", "empty", "empty", "empty"];
   }
 
   physicalAttack(){
@@ -48,34 +49,103 @@ export class Player extends CharacterClass
     this.strength = this.strength + 1;
     this.dexterity = this.dexterity + 1;
   }
-  equipItem(item)
+  useItem(item)
   {
-    if (this.inventory[0] == undefined)
+    if(item.itemType != "consumable")
     {
-      this.totalHP = this.totalHP + item.hpMod;
-      this.intelligence = this.intelligence + item.intMod;
-      this.strength = this.strength + item.strMod;
-      this.dexterity = this.dexterity + item.dexMod;
-      this.inventory.push(item.itemName);
+      console.log("You can't quaff that!")
     }
     else
     {
-      console.log("You already have something equipped!");
+      if(item.itemCharges <= 0)
+      {
+        console.log("No charges remain!")
+      }
+      else
+      {
+        this.level += item.
+        this.strength += item.strMod;
+        this.dexterity += item.dexMod;
+        this.intelligence += item.intMod;
+        this.currentHP += item.currentHpMod
+        this.totalHP += item.hpMod
+        this.charName = item.nameMod + " " + this.charName;
+        item.itemCharges -= 1;
+      }
     }
   }
-  unequipItem(item)
+  equipMainHand(item)
   {
-    if (this.inventory[0] != undefined)
+    if(item.itemType === "weapon")
+    {
+      if(this.inventory[0] === "empty")
+      {
+        this.totalHP += item.hpMod;
+        this.intelligence = this.intelligence + item.intMod;
+        this.strength = this.strength + item.strMod;
+        this.dexterity = this.dexterity + item.dexMod;
+        this.inventory[0] = item.itemName;
+      }
+      else
+      {
+        console.log("You already have something equipped in your main hand!");
+      }
+    }
+    else
+    {
+      console.log("You cannot equip that item in your main hand!");
+    }
+  }
+  unequipMainHand(item)
+  {
+    if (this.inventory[0] != "empty")
     {
       this.totalHP = this.totalHP - item.hpMod;
       this.intelligence = this.intelligence - item.intMod;
       this.strength = this.strength - item.strMod;
       this.dexterity = this.dexterity - item.dexMod;
-      this.inventory.pop(item.itemName);
+      this.inventory[0] = "empty";
     }
     else
     {
-      console.log("You have nothing equipped!");
+      console.log("You have nothing equipped in your main hand!");
+    }
+  }
+  equipOffHand(item)
+  {
+    if(item.itemType === "weapon")
+    {
+      if(this.inventory[1] === "empty")
+      {
+        this.totalHP = this.totalHP + item.hpMod;
+        this.intelligence = this.intelligence + item.intMod;
+        this.strength = this.strength + item.strMod;
+        this.dexterity = this.dexterity + item.dexMod;
+        this.inventory[1] = item.itemName;
+      }
+      else
+      {
+        console.log("You already have something equipped in your off hand!");
+      }
+    }
+    else
+    {
+      console.log("You cannot equip that item in your off hand!");
+    }
+  }
+  unequipOffHand(item)
+  {
+    if (this.inventory[1] != "empty")
+    {
+      this.totalHP = this.totalHP - item.hpMod;
+      this.intelligence = this.intelligence - item.intMod;
+      this.strength = this.strength - item.strMod;
+      this.dexterity = this.dexterity - item.dexMod;
+      this.inventory[1] = "empty";
+    }
+    else
+    {
+      console.log("You have nothing equipped in your off hand!");
     }
   }
 }
